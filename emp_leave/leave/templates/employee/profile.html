@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "emp_sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <!-- Button for sidebar toggle -->
+                <button class="btn" id="toggleSidebar" type="button" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="profile dropdown-center" >
+                    <div class="name" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.fname}} {{emp_details.lname}}</div>
+                    <div class="emp-id" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.eid}}</div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{%url 'profile' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'change_password'%}">change password</a></li>
+                        <li><a class="dropdown-item" href="{% url 'emp_logout' %}">logout</a></li>
+                      </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Update Employee</h5>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags == "error" %}
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                <form action="{% url 'doupdate_emp' emp_details.id%}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="eid" class="">EMP ID</label>
+                                        <input type="text" class="form-control" id="eid" name="eid" value="{{emp_details.eid}}" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fname" class="">First Name</label>
+                                        <input type="text" class="form-control" id="fname" name="fname" value="{{emp_details.fname}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lname" class="">Last Name</label>
+                                        <input type="text" class="form-control" id="lname" name="lname" value="{{emp_details.lname}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="">Email Address</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{emp_details.email}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="">Phone</label>
+                                        <input type="text" maxlength="10" class="form-control" id="phone" name="phone"value="{{emp_details.phone}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="department" class="">Department</label>
+                                      <select class="form-select" name="department" id="department" required readonly>
+                                          <option selected value="{{emp_details.department}}">{{emp_details.department}}</option>
+                                          {% for i in departments  %}
+                                          <option value="{{i.title}}">{{i.title}}</option>
+                                          {% endfor %}
+                                      </select>
+                                  </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="">Gender</label>
+                                        <select name="gender" class="form-control"id="gender" readonly>
+                                            <option selected value="{{emp_update.gender}}">{{emp_details.gender}}</option>
+                                            <option value="male">male</option>
+                                            <option value="female">female</option>
+                                            <option value="others">others</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="country" class="">Country</label>
+                                        <select class="form-select" name="country" id="country" required>
+                                            <option selected value="{{emp_details.country}}">{{emp_details.country}}</option>
+                                            {% for i in country_list  %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="city" class="">City</label>
+                                        <select class="form-select" name="city" id="city" >
+                                            <option selected value="{{emp_details.city}}">{{emp_details.city}}</option>
+                                            {% for i in india_list %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="">Address</label>
+                                        <input type="textfield" class="form-control" id="address" name="address" value="{{emp_details.address}}" required>
+                                    </div>
+        
+                                   <button type="submit" class="btn btn-primary">update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

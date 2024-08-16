@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+          {% include "admin/nav.html" %}
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                              <h5 class="card-title mb-4">Add Department</h5>
+                              
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                      {% else %}
+                                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="title" class="">Department Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="sf" class="">Shortform</label>
+                                    <input type="text" class="form-control" id="sf" name="sf" required>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">create</button>
+                              </form>
+
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <div class="wrapper">
+          {% include "sidebar.html" %}
+          <!-- Main Component -->
+          <div class="main">
+            {% include "admin/nav.html" %}
+              <main class="content px-3 py-2">
+                  <div class="container-fluid">
+                      <div class="mb-3">
+                          <div class="container">
+                            <div class="table-title p-3 d-flex justify-content-between" >
+                              <span class="d-flex align-items-center">DECLINED</span>
+                            </div>
+                            <div class="table-container">
+                            <table class="table text-center table-bordered progress-table ">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">EMP ID</th>
+                                    <th scope="col">FULL NAME</th>
+                                    <th scope="col">LEAVE TYPE</th>
+                                    <th scope="col">APPLIED ON</th>
+                                    <th scope="col">CURRENT STATUS</th>
+                                    <th scope="col">ACTION</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% for i in declined%}
+                                  {% if i.status == 1 %}
+                                    <tr>
+                                      <td scope="row">{{forloop.counter}}</td>
+                                      <td>{{i.eid.eid}}</td>
+                                      <td>{{i.eid.fname}} {{i.eid.lname}}</td>
+                                      <td>{{i.leavetype}}</td>
+                                      <td>{{i.request_date}}</td>
+                                      <td>
+                                        {% if i.status == 0%}
+                                          <span class="pending">Pending <i class="bi bi-clock-history"></i></span>
+                                          {% elif i.status == 1%}
+                                          <span class="declined">Declined <i class="bi bi-x-circle"></i></span>
+                                          {%else%}
+                                          <span class="approved">Approved <i class="bi bi-check-circle"></i></span>
+                                        {% endif %}
+                                      </td>
+                                      <td> <a href="{% url 'emp_leave_details' i.id %}"><span>view</span></a></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                
+                                </tbody>
+                              </table>
+                            </div>
+                        
+                        </div>
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </div>
+      {% endblock content %}

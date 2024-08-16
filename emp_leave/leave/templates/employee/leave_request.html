@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "emp_sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <!-- Button for sidebar toggle -->
+                <button class="btn" id="toggleSidebar" type="button" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="profile dropdown-center" >
+                    <div class="name" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.fname}} {{emp_details.lname}}</div>
+                    <div class="emp-id" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.eid}}</div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{%url 'profile' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'change_password'%}">change password</a></li>
+                        <li><a class="dropdown-item" href="{% url 'emp_logout' %}">logout</a></li>
+                      </ul>
+                </div>
+                
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                              <h5 class="card-title mb-4">Apply Leave</h5>
+                              <form action="" method="POST">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                      {% else %}
+                                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="start_date" class="">Start Date</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="end_date" class="">End Date</label>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="leave_type" class="">Your Leave Type</label>
+                                    <select class="form-control" name="leave_type" id="leave_type" required>
+                                        <option selected>Select</option>
+                                        {% for i in leave_types %}
+                                        <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="condition" class="">Describe your condition</label>
+                                    <textarea class="form-control" id="condition" name="condition" rows="3" required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary float-end">apply</button>
+                              </form>
+                              
+                            </div>
+                          </div>
+                        
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

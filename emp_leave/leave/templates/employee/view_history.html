@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "emp_sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <!-- Button for sidebar toggle -->
+                <button class="btn" id="toggleSidebar" type="button" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="profile dropdown-center" >
+                    <div class="name" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.fname}} {{emp_details.lname}}</div>
+                    <div class="emp-id" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{emp_details.eid}}</div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{%url 'profile' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'change_password'%}">change password</a></li>
+                        <li><a class="dropdown-item" href="{% url 'emp_logout' %}">logout</a></li>
+                      </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="container mt-4">
+                            <div class="table-title p-3 d-flex justify-content-between" >
+                              <span class="d-flex align-items-center">Leave History Table</span>
+                            </div>
+                            <div class= "table-responsive">
+                            <table class="table text-center table-bordered progress-table">
+                                <thead>
+                                  <tr id="table-header">
+                                    <th scope="col">SN</th>
+                                    <th scope="col">TYPE</th>
+                                    <th scope="col">CONDITION</th>
+                                    <th scope="col">FORM</th>
+                                    <th scope="col">TO</th>
+                                    <th scope="col">APPLIED</th>
+                                    <th scope="col">ADMIN'S REMARK</th>
+                                    <th scope="col">STATUS</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="table-responsive-sm">
+                                {% for i in leave_details %}
+                                  <tr>
+                                    <td scope="row">{{forloop.counter}}</td>
+                                    <td>{{i.leavetype}}</td>
+                                    <td>{{i.description}}</td>
+                                    <td>{{i.fromDate}}</td>
+                                    <td>{{i.toDate}}</td>
+                                    <td>{{i.request_date}}</td>
+                                    <td>
+                                      {% if i.adminRemarkDate == ""%}
+                                      <span></span>
+                                      {% else %}
+                                      {{i.adminRemark}} at {{i.adminRemarkDate}}
+                                      {% endif %}
+                                    </td>
+                                    <td>
+                                      {% if i.status == 0%}
+                                      <span class="pending">Pending <i class="bi bi-clock-history"></i></span>
+                                      {% elif i.status == 1%}
+                                      <span class="declined">Declined <i class="bi bi-x-circle"></i></span>
+                                      {%else%}
+                                      <span class="approved">Approved <i class="bi bi-check-circle"></i></span>
+                                      {% endif %}
+                                    </td>
+                                  </tr>
+
+                                  {% endfor %}
+                                
+                                </tbody>
+                              </table>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

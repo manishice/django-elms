@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <!-- Button for sidebar toggle -->
+                <button class="btn" id="toggleSidebar" type="button" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <h3 class="">Leave Manage</h3>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    {% endblock content %}

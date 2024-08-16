@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+    <div class="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == "error" %}
+                  <div class="alert alert-danger alert-dismissible fade show" data-mdb-delay="3000" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+      
+        <div class="login-container">
+          <h2 class="mb-5 text-center">RECOVERY YOUR PASSWORD</h2>
+          
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="password" class="">New Password</label>
+                    <div class="pass-icon">
+                        <input type="password" class="form-control" id="password" name="passwd" required>
+                        <i class="bi bi-eye-slash" id="hide-pass" onclick="pass()"></i>
+                        <i class="bi bi-eye" id="show-pass" style="visibility:hidden" onclick="pass()"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password2" class="">Confirm Password</label>
+                    <div class="pass-icon">
+                        <input type="password" class="form-control" id="password2" name="passwd2" required>
+                        <i class="bi bi-eye-slash" id="hide-pass2" onclick="cnfm_pass()"></i>
+                        <i class="bi bi-eye" id="show-pass2" style="visibility:hidden" onclick="cnfm_pass()"></i>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary w-100">recovery</button>
+            </form>
+            
+
+        </div>
+        <br>
+            <a href="{% url 'admin_login'%}">go to login</a>
+    </div>
+{% endblock content %}

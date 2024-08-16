@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <div class="wrapper">
+          {% include "sidebar.html" %}
+          <!-- Main Component -->
+          <div class="main">
+            {% include "admin/nav.html" %}
+              <main class="content px-3 py-2">
+                  <div class="container-fluid">
+                      <div class="mb-3">
+                          <div class="container mt-4">
+                            {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags == "error" %}
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            <div class="table-title p-3 d-flex justify-content-between" >
+                              <span class="d-flex align-items-center">EMPLOYEE LEAVE DETAILS</span>
+                            </div>
+                            <table class="table text-center table-bordered progress-table">
+                              <tbody>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">EMP ID:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.eid.eid}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">EMP NAME:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.eid.fname}} {{leave_details.eid.lname}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">GENDER:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.eid.gender}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">EMAIL:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.eid.email}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">CONTACT:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.eid.phone}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">LEAVE TYPE:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.leavetype}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">LEAVE FROM:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.fromDate}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">LEAVE UPTO:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874" colspan="3">{{leave_details.toDate}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">LEAVE APPLIED:</td>
+                                    <td scope="row" style="background-color:#ded6f7; color:#424874">{{leave_details.request_date}}</td>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">STATUS:</td>
+                                    <td scope="row" style="background-color:#ded6f7;" colspan="3">
+                                      {% if leave_details.status == 0%}
+                                        <span class="pending">Pending <i class="bi bi-clock-history"></i></span>
+                                        {% elif leave_details.status == 1%}
+                                        <span class="declined">Declined <i class="bi bi-x-circle"></i></span>
+                                        {%else%}
+                                        <span class="approved">Approved <i class="bi bi-check-circle"></i></span>
+                                      {% endif %}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">LEAVE CONDITION:</td>
+                                    <td scope="row" colspan="12" style="background-color:#ded6f7; color:#424874">{{leave_details.description}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">ADMIN REMARK:</td>
+                                    <td scope="row" colspan="12" style="background-color:#ded6f7; color:#424874">
+                                      {% if leave_details.adminRemark == "" %}
+                                      <span>Waiting for action</span>
+                                      {% else %}
+                                      {{leave_details.adminRemark}}
+                                      {% endif %}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td scope="row" class="fw-bold" style="background-color:#424874; color:#f4eeff">ADMIN REMARK ON:</th>
+                                    <td scope="row" colspan="12" style="background-color:#ded6f7; color:#424874">
+                                      {% if leave_details.adminRemarkDate == "" %}
+                                      <span>NA</span>
+                                      {% else %}
+                                      {{leave_details.adminRemarkDate}}
+                                      {% endif %}
+                                    </td>
+                                  </tr>
+                                
+                                </tbody>
+                              </table>
+                              <div class="d-flex justify-content-center">
+                                {% if leave_details.status == 0 %}
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#leave_details{{leave_details.id}}">set action</button>
+                                {% else %}
+                                <span></span>
+                                {% endif %}
+                              </div>
+
+                              <form action="{% url 'admin_remark' leave_details.id %}" method="POST">
+                                {% csrf_token %}
+                              <div class="modal fade" id="leave_details{{leave_details.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Set Action</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                          <select name="action" class="form-control"id="leave_details{{leave_details.id}}">
+                                              <option selected>choose...</option>
+                                              <option value="2">approve</option>
+                                              <option value="1">decline</option>
+                                          </select>
+                                      </div>
+                                      <div class="mb-3">
+                                        <textarea class= "form-control" name="admin_remark"  placeholder= "Description" id="admin_remark" rows="2"></textarea>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-success">Done</button>
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              </form>
+                        
+                        </div>
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </div>
+      {% endblock content %}

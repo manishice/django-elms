@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand px-3 border-bottom">
+  <!-- Button for sidebar toggle -->
+  <button class="btn" id="toggleSidebar" type="button" >
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="admin-profile d-flex justify-content-between align-items-center">
+    <div  class="notification me-5 fs-5 dropstart">
+      <span type="button" class="bi bi-bell-fill position-relative " data-bs-toggle="dropdown" aria-expanded="false">
+        {% if notification == 0 %}
+        <span></span>
+        {% else %}
+        <span class="round position-absolute top-0 start-100 translate-middle">
+          {{notification}}
+        </span>
+        {% endif %}
+      </span>
+          
+          
+          <ul class="dropdown-menu shadow-lg mt-4">
+            <div class="notification-item">
+               <div class="notification-title">
+                  <span>You have {{notification}} unread notification</span>
+               </div>
+               <div class="notification-list">
+                {% for l in notification_data %}
+                <a href="{% url 'emp_leave_details' l.id %}">
+                  <div class="notification-data mb-2 p-2">
+                    <div class="notify-data">  
+                      <b>{{l.eid.fname}} {{l.eid.lname}}</b>
+                      <br>
+                      <b>({{l.eid.eid}})</b> has applied for leave
+                    </div>
+                    <span class="notify-date">at {{l.request_date}}</span>
+                  </div>
+                </a>
+                
+                {% endfor %}
+                
+               </div>
+            </div>
+          </ul>
+    </div>
+  
+    <div class="profile dropdown-center" >
+      <div class="admin-name" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{admin_details.fullname}}</div>
+      <div class="emp-id" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{admin_details.uname}}</div>
+          <ul class="dropdown-menu">
+            {% comment %} <li><a class="dropdown-item" href="{%url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'change_password'%}">change password</a></li> {% endcomment %}
+            <li><a class="dropdown-item" href="{% url 'emp_logout' %}">logout</a></li>
+          </ul>
+      </div>
+  </div>
+</nav>

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+      <div class="wrapper">
+          {% include "sidebar.html" %}
+          <!-- Main Component -->
+          <div class="main">
+              {% include "admin/nav.html" %}
+              <main class="content px-3 py-2">
+                  <div class="container-fluid">
+                      <div class="mb-3">
+                          <div class="container">
+                            <div class="table-title p-3 d-flex justify-content-between" >
+                                <span class="d-flex align-items-center">Department Table</span>
+                                <a href="{%url 'add_department'%}">
+                                <button type="button" class="btn btn-success ">
+                                    <i class="bi bi-plus-circle"></i>
+                                    add department
+                                </button>
+                               </a>
+                            </div>
+                            <table class="table text-center">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Department Name</th>
+                                    <th scope="col">Short Code</th>
+    
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in departments%}
+                                  <tr>
+                                    <td scope="row">{{forloop.counter}}</td>
+                                    <td>{{i.title}}</td>
+                                    <td>{{i.shortform}}</td>
+                                  </tr>
+                                  {% endfor %}
+                                
+                                </tbody>
+                              </table>
+                        
+                        </div>
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </div>
+{% endblock content %}

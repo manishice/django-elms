@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <div class="main">
+            {% include "admin/nav.html" %}
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Update Employee</h5>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags == "error" %}
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                <form action="{% url 'doupdate_emp' emp_update.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="eid" class="">EMP ID</label>
+                                        <input type="text" class="form-control" id="eid" name="eid" value="{{emp_update.eid}}" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fname" class="">First Name</label>
+                                        <input type="text" class="form-control" id="fname" name="fname" value="{{emp_update.fname}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lname" class="">Last Name</label>
+                                        <input type="text" class="form-control" id="lname" name="lname" value="{{emp_update.lname}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="">Email Address</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{emp_update.email}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="">Phone</label>
+                                        <input type="text" maxlength="10" class="form-control" id="phone" name="phone"value="{{emp_update.phone}}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="department" class="">Department</label>
+                                      <select class="form-select" name="department" id="department" required>
+                                          <option selected value="{{emp_update.department}}">{{emp_update.department}}</option>
+                                          {% for i in departments  %}
+                                          <option value="{{i.title}}">{{i.title}}</option>
+                                          {% endfor %}
+                                      </select>
+                                  </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="">Gender</label>
+                                        <select name="gender" class="form-control"id="gender"  disabled>
+                                            <option selected value="{{emp_update.gender}}">{{emp_update.gender}}</option>
+                                            <option selected value="male">male</option>
+                                            
+                                            <option value="female">female</option>
+                                            <option value="others">others</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="country" class="">Country</label>
+                                        <select class="form-select" name="country" id="country" required>
+                                            <option selected value="{{emp_update.country}}">{{emp_update.country}}</option>
+                                            {% for i in country_list  %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="city" class="">City</label>
+                                        <select class="form-select" name="city" id="city" >
+                                            <option selected value="{{emp_update.city}}">{{emp_update.city}}</option>
+                                            {% for i in india_list %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="">Address</label>
+                                        <input type="textfield" class="form-control" id="address" name="address" value="{{emp_update.address}}" required>
+                                    </div>
+        
+                                   <button type="submit" class="btn btn-primary">update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <div class="wrapper">
+          {% include "sidebar.html" %}
+          <!-- Main Component -->
+          <div class="main">
+            {% include "admin/nav.html" %}
+              <main class="content px-3 py-2">
+                  <div class="container-fluid">
+                      <div class="mb-3">
+                          <div class="container">
+                            <div class="table-title p-3 d-flex justify-content-between" >
+                              <span class="d-flex align-items-center">Admin Table</span>
+                                <a href="{%url 'create_admin'%}">
+                                <button type="button" class="btn btn-success ">
+                                    <i class="bi bi-plus-circle"></i>
+                                    new admin
+                                </button>
+                              </a>
+                            </div>
+                            <table class="table text-center table-bordered progress-table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Name</th>
+                                    {% comment %} <th scope="col">email</th>
+                                    <th scope="col">username</th> {% endcomment %}
+                                    <th scope="col">creation_date</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in admins%}
+                                  <tr>
+                                    <td scope="row">{{forloop.counter}}</td>
+                                    <td>{{i.fullname}}</td>
+                                    {% comment %} <td>{{i.email}}</td>
+                                    <td>{{i.uname}}</td> {% endcomment %}
+                                    <td>{{i.creation_date}}</td>
+                                  </tr>
+                                  {% endfor %}
+                                
+                                </tbody>
+                              </table>
+                        
+                        </div>
+                      </div>
+                  </div>
+              </main>
+          </div>
+      </div>
+      {% endblock content %}

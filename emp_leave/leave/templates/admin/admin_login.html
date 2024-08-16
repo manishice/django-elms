@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+<div class="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "error" %}
+            <div class="alert alert-danger alert-dismissible fade show" data-mdb-delay="3000" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+    <div class="login-container">
+       
+    <h2 class="mb-5 text-center">ADMIN LOGIN</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <div class="pass-icon">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email or username" name="username">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <div class="pass-icon">
+                        <input type="password" class="form-control" id="password" placeholder="password" name="pass">
+                        <i class="bi bi-eye-slash" id="hide-pass" onclick="pass()"></i>
+                        <i class="bi bi-eye" id="show-pass" style="visibility:hidden" onclick="pass()"></i>
+                    </div>
+                </div>
+                <p class="mt-2"><a class="link-opacity-100" href="{% url 'admin_forget_pass'%}">forgot password</a></p>
+                <br>
+                <button type="submit" class="btn btn-primary w-100">sign in</button>
+            </form>
+        </div>
+        <p class="mt-5"><a href="{% url 'emp_login'%}">Employee Login</a></p>
+    </div>
+{% endblock content %}

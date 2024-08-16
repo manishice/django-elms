@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+          {% include "admin/nav.html" %}
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                              <h5 class="card-title mb-4">Create Admin</h5>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                      {% else %}
+                                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                      </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                 <form action="" id="adminform" method="POST">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="fullname" class="">Full Name</label>
+                                    <input type="text" value="{{values.fullname}}" class="form-control" id="fullname" name="fullname" onchange="validateFullname()">
+                                    <div id="fullnameerror"></div>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="uname" class="">Username</label>
+                                    <input type="text" value="{{values.uname}}" class="form-control" id="uname" name="uname" onchange="validateUsername()">
+                                    <div id="usernameerror"></div>
+                                  </div>
+                                <div class="mb-3">
+                                  <label for="email" class="">Email address</label>
+                                  <input type="text" value="{{values.email}}" class="form-control" id="email" name="email" onchange="validateEmail()">
+                                  <div id="emailerror"></div>
+                                </div>
+                                <div class="mb-3">
+                                  <label for="password" class="">Password</label>
+                                  <div class="pass-icon">
+                                    <input type="password" class="form-control" id="password" name="passwd" onchange="validatePassword()">
+                                    <i class="bi bi-eye-slash" id="hide-pass" onclick="pass()" ></i>
+                                    <i class="bi bi-eye" id="show-pass" style="visibility:hidden" onclick="pass()" ></i>
+                                  </div>
+                                  <div id="passworderror"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password2" class="">Confirm Password</label>
+                                    <div class="pass-icon">
+                                      <input type="password" class="form-control" id="password2" name="passwd2" onchange="validatePassword2()">
+                                      <i class="bi bi-eye-slash" id="hide-pass2" onclick="cnfm_pass()" ></i>
+                                      <i class="bi bi-eye" id="show-pass2" style="visibility:hidden" onclick="cnfm_pass()" ></i>
+                                    </div>
+                                    <div id="password2error"></div>
+                                  </div>
+                                  <p id="pass-message"></p>
+                                  <button type="submit" class="btn btn-primary">Create</button>
+                              </form>
+                              
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+      adminform.addEventListener('submit', ed => {
+        let valid = true;
+      
+        if (!validateFullname()) valid = false;
+        if (!validateUsername()) valid = false;
+        if (!validateEmail()) valid = false;
+        if (!validatePassword()) valid = false;
+        if (!validatePassword2()) valid = false;
+        
+        if (valid) {
+          adminform.submit();    
+        } else {
+          ed.preventDefault();
+        }
+      });
+    </script>
+    {% endblock content %}

@@ -1,0 +1,73 @@
+
+
+<!-- Sidebar -->
+<aside id="sidebar" class="sidebar ">
+    <div class="h-100">
+        <div class="sidebar-logo">
+            <b>ELMS</b>
+        </div>
+        <!-- Sidebar Navigation -->
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="sidebar-item dashboard">
+                <a href="{% url 'dashboard'%}" class="sidebar-link ">
+                    <i class="bi bi-speedometer"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="sidebar-item emp_section">
+                <a href="{% url 'emp_section'%}" class="sidebar-link">
+                    <i class="bi bi-people-fill"></i>
+                    Employee Section
+                </a>
+            </li>
+            <li class="sidebar-item department_section">
+                <a href="{% url 'department_section'%}" class="sidebar-link">
+                    <i class="bi bi-grid-fill"></i>
+                    Department Section
+                </a>
+            </li>
+            <li class="sidebar-item leave_types">
+                <a href="{% url 'leave_types'%}" class="sidebar-link">
+                    <i class="bi bi-card-list"></i>
+                    Leave Types
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href=""class="sidebar-link collapsedi" data-bs-toggle="collapse" data-bs-target="#manage-leaves"
+                    aria-expanded="false" aria-controls="manage-leaves">
+                    <i class="bi bi-feather"></i>
+                    Manage Leaves
+                </a>
+                <ul id="manage-leaves" class="sidebar-dropdown list-unstyled collapse ms-3" data-bs-parent="#sidebar-item">
+                    <li class="sidebar-item pending">
+                        <a href="{% url 'pending'%}" class="sidebar-link" >
+                            <i class="bi bi-clock-history"></i>
+                            Pending
+                        </a>
+                    </li>
+                    <li class="sidebar-item approved">
+                        <a href="{% url 'approved'%}" class="sidebar-link">
+                            <i class="bi bi-check2-circle"></i>
+                            Approved</a>
+                    </li>
+                    <li class="sidebar-item declined">
+                        <a href="{% url 'declined'%}" class="sidebar-link">
+                            <i class="bi bi-x-circle"></i>
+                            Declined</a>
+                    </li>
+                    <li class="sidebar-item leave_history">
+                        <a href="{% url 'leave_history'%}" class="sidebar-link">
+                            <i class="bi bi-file-text"></i>
+                            Leave History</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item admin_manage">
+                <a href="{%url 'admin_manage'%}" class="sidebar-link">
+                    <i class="bi bi-person-fill"></i>
+                    Manage Admin
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

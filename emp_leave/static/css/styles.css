@@ -1,0 +1,82 @@
+
+
+
+
+.pass-icon{
+    position: relative;
+}
+
+.bi.bi-eye-slash{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.bi.bi-eye{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.bi.bi-envelope{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login-container{
+    background-color: white;
+    padding: 1rem;
+    height: 100%;
+    width: 350px;
+    box-shadow: 0px 0px 20px rgb(89, 89, 89);
+    border-radius: 10px;
+}
+
+.pending{
+    color: rgb(33, 33, 255);
+}
+.declined{
+    color: red;
+}
+
+.approved{
+    color: rgb(0, 126, 0);
+}
+
+.icon{
+    border-radius: 50%; 
+    background-color:white; 
+    color: #424874;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    font-size: 25px
+}
+
+a{
+    text-decoration: none;
+}
+
+.bi.bi-person-vcard{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.error {
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
+}

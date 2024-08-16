@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <div class="main">
+            {% include "admin/nav.html" %}
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="card" style="width: 50rem;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">Add Employee</h5>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags == "error" %}
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                <form action="" id="form" method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="eid" class="">EMP ID</label>
+                                        <input type="text" class="form-control" id="eid" name="eid" value="{{eid}}" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fname" class="">First Name</label>
+                                        <input type="text" value="{{values.fname}}" class="form-control" id="fname" name="fname" onchange="validateFname()">
+                                        <div id="fnameerror"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lname" class="">Last Name</label>
+                                        <input type="text" value="{{values.lname}}" class="form-control" id="lname" name="lname" onchange="validateLname()">
+                                        <div id="lnameerror"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="">Email Address</label>
+                                        <input type="text" value="{{values.email}}" class="form-control" id="email" name="email" onchange="validateEmail()">
+                                        <div id="emailerror"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="">Phone</label>
+                                        <input type="text" maxlength="10" value="{{values.phone}}" class="form-control" id="phone" name="phone" onchange="validatePhone()">
+                                        <div id="phoneerror"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="department" class="">Department</label>
+                                      <select class="form-select" name="department" id="department">
+                                          <option selected>Select</option>
+                                          {% for i in departments  %}
+                                          <option value="{{i.title}}">{{i.title}}</option>
+                                          {% endfor %}
+                                      </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="">Gender</label>
+                                        <select name="gender" class="form-control"id="gender">
+                                            <option selected>Select</option>
+                                            <option value="male">male</option>
+                                            <option value="female">female</option>
+                                            <option value="others">others</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="country" class="">Country</label>
+                                        <select class="form-select" name="country" id="country" onchange="populate(this.id, 'city')">
+                                            <option selected>Select</option>
+                                            {% for i in country_list  %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="city" class="">City</label>
+                                        <select class="form-select" name="city" id="city">
+                                            <option selected>Select</option>
+                                            {% for i in india_list %}
+                                            <option value="{{i}}">{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="">Address</label>
+                                        <input type="textfield" value="{{values.address}}" class="form-control" id="address" name="address" onchange="validateAddress()">
+                                        <div id="addresserror"></div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="password" class="">Password</label>
+                                        <div class="pass-icon">
+                                            <input type="password" class="form-control" id="password" name="passwd" onchange="validatePassword()">
+                                            <i class="bi bi-eye-slash" id="hide-pass" onclick="pass()"></i>
+                                            <i class="bi bi-eye" id="show-pass" style="visibility:hidden" onclick="pass()"></i>
+                                        </div>
+                                        <div id="passworderror"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password2" class="">Confirm Password</label>
+                                        <div class="pass-icon">
+                                            <input type="password" class="form-control" id="password2" name="passwd2" onchange="validatePassword2()">
+                                            <i class="bi bi-eye-slash" id="hide-pass2" onclick="cnfm_pass()"></i>
+                                            <i class="bi bi-eye" id="show-pass2" style="visibility:hidden" onclick="cnfm_pass()"></i>
+                                        </div>
+                                        <div id="password2error"></div>
+                                    </div>
+                                    <p id="pass-message"></p>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+
+    
+    </script>
+{% endblock content %}
+
+

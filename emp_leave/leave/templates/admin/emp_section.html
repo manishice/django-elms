@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="wrapper">
+        {% include "sidebar.html" %}
+        <!-- Main Component -->
+        <div class="main">
+          {% include "admin/nav.html" %}
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <div class="container ">
+                          <div class="table-title p-3 d-flex justify-content-between" >
+                              <span class="d-flex align-items-center">Employee Table</span>
+                              <a href="{% url 'add_emp'%}">
+                              <button type="button" class="btn btn-success ">
+                                  <i class="bi bi-plus-circle"></i>
+                                  new employee
+                              </button>
+                            </a>
+                          </div>
+                          <div class="table-container">
+                          <table class="table text-center table-bordered progress-table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">SN</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">email</th>
+                                  <th scope="col">Department</th>
+                                  <th scope="col">created At</th>
+                                  <th scope="col">status</th>
+                                  <th scope="col">Action</th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for i in employees%}
+                                <tr>
+                                  <td scope="row">{{forloop.counter}}</td>
+                                  <td>{{i.fname}} {{i.lname}}</td>
+                                  <td>{{i.email}}</td>
+                                  <td>{{i.department}}</td>
+                                  <td>{{i.regdate}}</td>
+                                  <td>{% if i.status == 1 %}
+                                        <span type="button" class="badge rounded-pill text-bg-success" data-bs-toggle="modal" data-bs-target="#emp_status{{i.id}}">active</span>
+                                      {% else %}
+                                        <span type="button" class="badge rounded-pill text-bg-danger" data-bs-toggle="modal" data-bs-target="#emp_status{{i.id}}">inactive</span>
+                                      {% endif %}
+                                  </td>
+                                  <td class="">
+                                      <a href="{% url 'emp_update' i.id %}"><i class="bi bi-pen" style="color:blue"></i></a>
+                                      <i  class="bi bi-trash3-fill ms-3" style="color:red" type="button" data-bs-toggle="modal" data-bs-target="#delete_data{{i.id}}"></i>
+                                  </td>
+                                </tr>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_data{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Employee Data</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure want to delete ?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a href="{% url 'emp_delete' i.id %}"><button type="button" class="btn btn-danger">Yes</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                 <!--Modal emp status update-->
+                                 <form action="{% url 'emp_status' i.id %}" method="POST">
+                                  {% csrf_token %}
+                                <div class="modal fade" id="emp_status{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Status</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        
+                                          <div class="mb-3">
+                                            <label for="status" class="">status</label>
+                                            <select name="status" class="form-control"id="emp_status{{i.id}}">
+                                                <option selected>choose...</option>
+                                                <option value="1">active</option>
+                                                <option value="0">inactive</option>
+                                            </select>
+                                        </div>
+                                        
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
+                                {% endfor %}
+                              
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Launch demo modal
+                </button> {% endcomment %}
+            </main>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+
+
+
+    {% endblock content %}

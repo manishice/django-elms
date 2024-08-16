@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    
+    <div class="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+      {% if messages %}
+          {% for message in messages %}
+              {% if message.tags == "error" %}
+                  <div class="alert alert-danger alert-dismissible fade show" data-mdb-delay="3000" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endif %}
+          {% endfor %}
+      {% endif %}
+      
+        <div class="login-container">
+          <h2 class="mb-5 text-center">RECOVERY YOUR PASSWORD</h2>
+          
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">email</label>
+                    <div class="pass-icon">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" name="email">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">username</label>
+                    <div class="pass-icon">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" name="uname">
+                        <i class="bi bi-person-vcard"></i>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary w-100">recovery</button>
+            </form>
+            
+
+        </div>
+        <br>
+            <a href="{% url 'admin_login'%}">go to login</a>
+    </div>
+{% endblock content %}
